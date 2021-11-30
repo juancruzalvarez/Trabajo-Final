@@ -13,7 +13,7 @@ contains
       real, dimension(grado+1)                  :: coeficientes
       real, dimension(grado)                    :: calcular_raices
 
-      mat = matriz_qd(grado, coeficientes, iteraciones);
+      mat = matriz_qd(grado, coeficientes, iteraciones)
       write(*,*) 'Matriz del algoritmo qd:'
       call mostrar_matriz(mat, iteraciones, grado*2+1)
       write(*,*) 'Las raices calculadas del polinomio son:'
@@ -31,7 +31,7 @@ contains
       real, dimension(grado+1)                  :: coeficientes
       real, dimension(grado)                    :: calcular_raices
 
-      mat = matriz_qd(grado, coeficientes, iteraciones);
+      mat = matriz_qd(grado, coeficientes, iteraciones)
       do i = 2, grado*2+1, 2
          calcular_raices(i/2) = mat(iteraciones, i)
       end do
@@ -46,9 +46,9 @@ contains
       real, dimension(iteraciones, grado*2 +1)  :: matriz_qd 
       real, dimension(grado+1)                  :: coeficientes
 
-      matriz_qd(1, :) = iteracion_inicial_qd(grado, coeficientes);
+      matriz_qd(1, :) = iteracion_inicial_qd(grado, coeficientes)
       do i=2, iteraciones
-         matriz_qd(i, :) = iteracion_qd(grado, matriz_qd(i-1, :));
+         matriz_qd(i, :) = iteracion_qd(grado, matriz_qd(i-1, :))
       end do
       
    end function matriz_qd
@@ -57,7 +57,7 @@ contains
    function iteracion_inicial_qd(grado, coeficientes)
       implicit none
 
-      integer :: grado
+      integer                      :: grado
       real, dimension(grado*2 + 1) :: iteracion_inicial_qd
       real, dimension(grado +1)    :: coeficientes
       
@@ -81,12 +81,10 @@ contains
    function iteracion_qd(grado, iteracion_anterior)
       implicit none
 
-      integer  grado
-      real     iteracion_anterior (grado*2 + 1)
-      real     iteracion_qd       (grado*2 + 1)
-      integer  i
+      integer                      :: grado, i
+      real, dimension(grado*2 + 1) :: iteracion_qd, iteracion_anterior 
 
-      iteracion_qd(1)       = 0
+      iteracion_qd(1)         = 0
       iteracion_qd(grado*2+1) = 0
 
       do i = 2, grado*2+1, 2 
@@ -94,7 +92,7 @@ contains
       end do
 
       do i = 3, grado*2 , 2
-         iteracion_qd(i) = (iteracion_qd(i+1)/iteracion_qd(i-1))*iteracion_anterior(i);
+         iteracion_qd(i) = (iteracion_qd(i+1)/iteracion_qd(i-1))*iteracion_anterior(i)
       end do
    end function iteracion_qd
 
