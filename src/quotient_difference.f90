@@ -11,7 +11,6 @@ contains
       integer                                   :: grado, iteraciones, i
       real, dimension(iteraciones, grado*2+1)   :: mat
       real, dimension(grado+1)                  :: coeficientes
-      real, dimension(grado)                    :: calcular_raices
 
       mat = matriz_qd(grado, coeficientes, iteraciones)
       write(*,*) 'Matriz del algoritmo qd:'
