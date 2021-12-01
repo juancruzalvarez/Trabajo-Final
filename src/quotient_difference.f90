@@ -8,42 +8,42 @@ contains
    subroutine mostrar_raices_matriz(grado, coeficientes, iteraciones)
       implicit none
 
-      integer                                   :: grado, iteraciones, i
-      real, dimension(iteraciones, grado*2+1)   :: mat
-      real, dimension(grado+1)                  :: coeficientes
+      integer                                              :: grado, iteraciones, i
+      real (kind = 8), dimension(iteraciones, grado*2+1)   :: mat
+      real (kind = 8), dimension(grado+1)                  :: coeficientes
 
       mat = matriz_qd(grado, coeficientes, iteraciones)
       write(*,*) 'Matriz del algoritmo qd:'
       call mostrar_matriz(mat, iteraciones, grado*2+1)
       write(*,*) 'Las raices calculadas del polinomio son:'
       do i = 2, grado*2+1, 2
-         write(*, '(A,I2,A,F10.4)') 'x',i/2,': ', mat(iteraciones, i)
+         write(*, '(A,I2,A,F0.4)') 'x',i/2,': ', mat(iteraciones, i)
       end do
    end subroutine mostrar_raices_matriz
 
    !devuelve las raices del polinomio calculadas por el algoritmo qd. 
-   function calcular_raices(grado, coeficientes, iteraciones)
+   function calcular_raices_qd(grado, coeficientes, iteraciones)
       implicit none
 
-      integer                                   :: grado, iteraciones, i
-      real, dimension(iteraciones, grado*2+1)   :: mat
-      real, dimension(grado+1)                  :: coeficientes
-      real, dimension(grado)                    :: calcular_raices
+      integer                                              :: grado, iteraciones, i
+      real (kind = 8), dimension(iteraciones, grado*2+1)   :: mat
+      real (kind = 8), dimension(grado+1)                  :: coeficientes
+      real (kind = 8), dimension(grado)                    :: calcular_raices_qd
 
       mat = matriz_qd(grado, coeficientes, iteraciones)
       do i = 2, grado*2+1, 2
-         calcular_raices(i/2) = mat(iteraciones, i)
+         calcular_raices_qd(i/2) = mat(iteraciones, i)
       end do
 
-   end function calcular_raices
+   end function calcular_raices_qd
 
    !devuelve la matriz del algoritmo qd.
    function matriz_qd(grado, coeficientes, iteraciones)
       implicit none
 
-      integer                                   :: grado, iteraciones, i
-      real, dimension(iteraciones, grado*2 +1)  :: matriz_qd 
-      real, dimension(grado+1)                  :: coeficientes
+      integer                                              :: grado, iteraciones, i
+      real (kind = 8), dimension(iteraciones, grado*2 +1)  :: matriz_qd 
+      real (kind = 8), dimension(grado+1)                  :: coeficientes
 
       matriz_qd(1, :) = iteracion_inicial_qd(grado, coeficientes)
       do i=2, iteraciones
@@ -56,11 +56,10 @@ contains
    function iteracion_inicial_qd(grado, coeficientes)
       implicit none
 
-      integer                      :: grado
-      real, dimension(grado*2 + 1) :: iteracion_inicial_qd
-      real, dimension(grado +1)    :: coeficientes
+      integer                                 :: grado, i
+      real (kind = 8), dimension(grado*2 + 1) :: iteracion_inicial_qd
+      real (kind = 8), dimension(grado +1)    :: coeficientes
       
-      integer :: i
 
       iteracion_inicial_qd(1)         = 0
       iteracion_inicial_qd(2)         = -coeficientes(2) / coeficientes(1)
@@ -80,8 +79,8 @@ contains
    function iteracion_qd(grado, iteracion_anterior)
       implicit none
 
-      integer                      :: grado, i
-      real, dimension(grado*2 + 1) :: iteracion_qd, iteracion_anterior 
+      integer                                 :: grado, i
+      real (kind = 8), dimension(grado*2 + 1) :: iteracion_qd, iteracion_anterior 
 
       iteracion_qd(1)         = 0
       iteracion_qd(grado*2+1) = 0
