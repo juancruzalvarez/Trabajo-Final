@@ -1,5 +1,6 @@
 module quotient_difference
 use util
+use newton
 implicit none
    
 contains
@@ -20,6 +21,23 @@ contains
          write(*, '(A,I2,A,F0.4)') 'x',i/2,': ', mat(iteraciones, i)
       end do
    end subroutine mostrar_raices_matriz
+
+      
+   !devuelve las raices del polinomio calculadas por el algoritmo qd, y refinadas por el metodo de newton.
+   function calcular_raices_qd_nwt(grado, coeficientes, iteraciones_qd, iteraciones_nwt)
+      implicit none
+
+      integer                           :: grado, iteraciones_qd, iteraciones_nwt, i
+      real (kind = 8), dimension(grado) :: calcular_raices_qd_nwt, coeficientes, raices
+
+      raices = calcular_raices_qd(grado, coeficientes, iteraciones_qd)
+      do i=1, grado
+         raices(i) = mejorar_estimacion(grado, coeficientes, raices(i), iteraciones_nwt)
+      end do
+      calcular_raices_qd_nwt = raices
+
+   end function calcular_raices_qd_nwt
+
 
    !devuelve las raices del polinomio calculadas por el algoritmo qd. 
    function calcular_raices_qd(grado, coeficientes, iteraciones)

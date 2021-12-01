@@ -32,5 +32,8 @@ program main
    write(*,*) 'Las raices calculadas con 50 iteraciones de qd son:'
    call mostrar_vector(calcular_raices_qd(grado, coeficientes, 50), grado, .true.)
 
+   write(*,*) 'Las raices calculadas con 10 iteraciones de qd, y mejoradas con 5 iteraciones del metodo de newton son:'
+   call mostrar_vector(calcular_raices_qd_nwt(grado, coeficientes, 10, 5), grado, .true.)
+
    read (*,*)
 end program main
