@@ -94,8 +94,8 @@ end function dividir_por_factor_lineal
 ! devuelve el resultado de dividir un polinomio por (x^2 + bx + c)
 function dividir_por_factor_cuadratico(grado, coeficientes, b, c)
    implicit none
-   integer                           :: grado, grado_act, i
-   real (kind=8)                     :: b, c, cp
+   integer                           :: grado, i
+   real (kind=8)                     :: b, c
    real (kind=8), dimension(grado-1) :: dividir_por_factor_cuadratico
    real (kind=8), dimension(grado+1) :: coeficientes, aux
 
