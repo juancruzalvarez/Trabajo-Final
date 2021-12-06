@@ -10,7 +10,7 @@ module newton
       implicit none
       integer                           :: grado
       real (kind = 8)                   :: iteracion_nwt, x0, y0, pendiente_tangente
-      real (kind = 8), dimension(grado) :: coeficientes
+      real (kind = 8), dimension(grado+1) :: coeficientes
 
       y0 = evaluar_polinomio(grado, coeficientes, x0)                                              ! y0 = P(x0)
       pendiente_tangente = evaluar_polinomio(grado-1, calcular_derivada(grado, coeficientes), x0)  ! pendiente = P'(x0)
@@ -21,7 +21,7 @@ module newton
       implicit none
       integer                           :: grado, iteraciones, i
       real (kind = 8)                   :: mejorar_estimacion, estimacion_actual, x0
-      real (kind = 8), dimension(grado) :: coeficientes
+      real (kind = 8), dimension(grado+1) :: coeficientes
       estimacion_actual = x0
       do i=0, iteraciones
          estimacion_actual = iteracion_nwt(grado, coeficientes, estimacion_actual)
