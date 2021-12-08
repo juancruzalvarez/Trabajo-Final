@@ -35,6 +35,7 @@ module bairstow
       aplicar_bairstow = -1 * valores_actuales(1:2)
    end function aplicar_bairstow
 
+   !devuelve un vector de 4 elementos, los primeros dos los uv de la iteracion, y los siguientes dos los errores de la iteracion.
    function iteracion_bairstow(grado, coeficientes, uv)
       implicit none
 
