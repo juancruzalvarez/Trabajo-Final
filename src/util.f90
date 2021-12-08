@@ -80,14 +80,14 @@ function dividir_por_factor_lineal(grado, coeficientes, x0)
    implicit none
    integer                           :: grado, i
    real (kind=8)                     :: x0, aux
-   real (kind=8), dimension(grado)   :: dividir_por_factor_lineal
-   real (kind=8), dimension(grado+1) :: coeficientes
+   real (kind=8), dimension(grado+1) :: dividir_por_factor_lineal, coeficientes
 
    aux = 0
-   do i=1, grado+1
+   do i=1, grado
       dividir_por_factor_lineal(i) = coeficientes(i) + aux
       aux = (coeficientes(i) + aux) * x0
    end do
+   dividir_por_factor_lineal(grado+1) = 0
 
 end function dividir_por_factor_lineal
 
@@ -96,8 +96,7 @@ function dividir_por_factor_cuadratico(grado, coeficientes, b, c)
    implicit none
    integer                           :: grado, i
    real (kind=8)                     :: b, c
-   real (kind=8), dimension(grado-1) :: dividir_por_factor_cuadratico
-   real (kind=8), dimension(grado+1) :: coeficientes, aux
+   real (kind=8), dimension(grado+1) :: dividir_por_factor_cuadratico, coeficientes, aux
 
    aux = coeficientes
    do i=1, grado-1
@@ -105,8 +104,29 @@ function dividir_por_factor_cuadratico(grado, coeficientes, b, c)
       aux(i+1) = aux(i+1) - b*aux(i)
       aux(i+2) = aux(i+2) - c*aux(i)  
    end do
+   dividir_por_factor_cuadratico(grado) = 0
+   dividir_por_factor_cuadratico(grado+1) = 0
 
 end function dividir_por_factor_cuadratico
+
+!devuelve .true. si el vector contiene un valor v / vE(x-cota_error, x+cota_error).
+function tiene_x(n, vec, x, cota_error)
+   implicit none
+   logical                    :: tiene_x, encontrado
+   integer                    :: n, i
+   real(kind=8)               :: x, cota_error
+   real(kind=8), dimension(n) :: vec
+
+   encontrado = .false.
+   i = 1
+   do while(i<=n .and. .not. encontrado)
+      if( abs( vec(i)-x )<cota_error) then
+         encontrado = .true.
+      endif
+      i = i+1
+   end do
+   tiene_x = encontrado
+end function tiene_x
 
 
 end module util

@@ -24,15 +24,16 @@ contains
 
       
    !devuelve las raices del polinomio calculadas por el algoritmo qd, y refinadas por el metodo de newton.
-   function calcular_raices_qd_nwt(grado, coeficientes, iteraciones_qd, iteraciones_nwt)
+   function calcular_raices_qd_nwt(grado, coeficientes, iteraciones_qd, cota_error)
       implicit none
 
-      integer                           :: grado, iteraciones_qd, iteraciones_nwt, i
+      integer                           :: grado, iteraciones_qd, i
+      real (kind = 8)                   :: cota_error
       real (kind = 8), dimension(grado) :: calcular_raices_qd_nwt, coeficientes, raices
 
       raices = calcular_raices_qd(grado, coeficientes, iteraciones_qd)
       do i=1, grado
-         raices(i) = mejorar_estimacion(grado, coeficientes, raices(i), iteraciones_nwt)
+         raices(i) = mejorar_estimacion(grado, coeficientes, raices(i), cota_error)
       end do
       calcular_raices_qd_nwt = raices
 
@@ -44,13 +45,17 @@ contains
       implicit none
 
       integer                                              :: grado, iteraciones, i
-      real (kind = 8), dimension(iteraciones, grado*2+1)   :: mat
+      real (kind = 8), dimension(grado*2+1)                :: iteracion_actual
       real (kind = 8), dimension(grado+1)                  :: coeficientes
       real (kind = 8), dimension(grado)                    :: calcular_raices_qd
 
-      mat = matriz_qd(grado, coeficientes, iteraciones)
+      iteracion_actual = iteracion_inicial_qd(grado, coeficientes)
+      do i = 0, iteraciones
+         iteracion_actual = iteracion_qd(grado, iteracion_actual)
+      end do 
+
       do i = 2, grado*2+1, 2
-         calcular_raices_qd(i/2) = mat(iteraciones, i)
+         calcular_raices_qd(i/2) = iteracion_actual(i)
       end do
 
    end function calcular_raices_qd
